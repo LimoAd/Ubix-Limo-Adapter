@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appinfoContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:maxWidth="200dp"
+        android:text="Name"
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="11dp" />
+
+    <TextView
+        android:id="@+id/appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/appName"
+        android:maxWidth="200dp"
+        android:text="version"
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="11dp" />
+
+    <TextView
+        android:id="@+id/appPublisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/appVersion"
+        android:maxWidth="200dp"
+        android:text="发布者"
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/appPermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appName"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text="权限"
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/appAgreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appName"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/appPermission"
+        android:text="隐私协议"
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/app_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appName"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/appAgreement"
+        android:text="应用介绍"
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/app_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appName"
+        android:layout_marginLeft="58dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/app_desc"
+        android:text=""
+        android:textColor="@color/ubix_tool_black3"
+        android:textSize="10dp" />
+</RelativeLayout>

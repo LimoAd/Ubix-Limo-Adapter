@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/loadBtn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_blue_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="拉取"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/priceBtn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="获取价格"
+        android:textColor="@color/ubix_tool_black65"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/showBtn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="展示"
+        android:textColor="@color/ubix_tool_black65"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/loadAndShow"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="拉取并展示"
+        android:textColor="@color/ubix_tool_black65"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/showList"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="信息流List展示"
+        android:textColor="@color/ubix_tool_black65"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/isValid"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="校验广告是否有效"
+        android:textColor="@color/ubix_tool_black65"
+        android:textSize="14sp" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/logTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:lineSpacingExtra="6dp"
+            android:minHeight="220dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="12sp" />
+    </ScrollView>
+
+
+</merge>
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <com.ubimax.sample.base.DemoTitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/activity_item_slot"></include>
+
+    <View
+        android:id="@+id/viewline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ubix_tool_viewline"
+        android:visibility="gone" />
+
+
+    <FrameLayout
+        android:id="@+id/orientationFl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="是否横屏展示广告"
+            android:textColor="@color/ubix_tool_black85"
+            android:textSize="16sp" />
+
+        <com.ubimax.sample.base.SwitchButton
+            android:id="@+id/showOrientationSwitch"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center"
+            android:shadowColor="@color/ubix_tool_black85"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ubix_tool_viewline" />
+
+    <include layout="@layout/load_btnui"></include>
+
+
+</LinearLayout>
+
+
+

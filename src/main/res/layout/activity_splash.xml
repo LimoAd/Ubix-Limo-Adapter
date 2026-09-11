@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg"
+        android:orientation="vertical"
+        tools:ignore="MissingDefaultResource">
+
+        <com.ubimax.sample.base.DemoTitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+
+        <include layout="@layout/activity_item_slot">
+            
+        </include>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="应用层广告加载容忍时间(ms)"
+                android:textColor="@color/ubix_tool_black85"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/loadTimeOutEdt"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="3000"
+                android:textColor="@color/ubix_tool_black65"
+                android:textSize="14sp"
+                android:theme="@style/MyEditText" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="广告高度(dp)"
+                android:textColor="@color/ubix_tool_black85"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/heightEdt"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:inputType="number"
+                android:text=""
+                android:textColor="@color/ubix_tool_black65"
+                android:textSize="14sp"
+                android:theme="@style/MyEditText" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="开屏显示logo"
+                android:textColor="@color/ubix_tool_black85"
+                android:textSize="16sp" />
+
+            <com.ubimax.sample.base.SwitchButton
+                android:id="@+id/logoSwitch"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center"
+                android:shadowColor="@color/ubix_tool_black85"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ubix_tool_viewline" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="是否横屏展示广告"
+                android:textColor="@color/ubix_tool_black85"
+                android:textSize="16sp" />
+
+            <com.ubimax.sample.base.SwitchButton
+                android:id="@+id/showOrientationSwitch"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center"
+                android:shadowColor="@color/ubix_tool_black85"
+                android:textSize="16sp" />
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ubix_tool_viewline" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ubix_tool_viewline" />
+
+        <include layout="@layout/load_btnui"></include>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/appLogo"
+        android:background="@color/white"
+        android:visibility="gone">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/appLogo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/colorBlue0094ff"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/bottomIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="可选区域------显示log"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+    </RelativeLayout>
+</RelativeLayout>
+

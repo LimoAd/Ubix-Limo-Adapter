@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">UBidding demo</string>
+    <string name="permissions_list">权限申请</string>
+    <string name="request_phone_state">读取设备信息权限</string>
+    <string name="request_storage">读写外部存储权限</string>
+    <string name="request_location">获取粗略定位权限</string>
+    <string name="request_location_gps">获取精确定位权限</string>
+    <string name="request_app_list">读取应用列表权限</string>
+
+    <string name="load_list">列表展示</string>
+</resources>

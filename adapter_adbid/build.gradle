@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 30
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs', '../libs'
+    }
+}
+
+dependencies {
+    // UBidding 主 SDK 由宿主提供
+    compileOnly fileTree(include: ['UBidding.SDK*.aar'], dir: '../libs')
+    // 领摩 Adbid 聚合 SDK
+    api files('libs/adbid_sdk_2.1.0.23_0911_1016.aar')
+    api files('libs/adbid_merge_kuaiyou_1.0.0_0911_1953.aar')
+    api files('libs/lmky-5.1.4.aar')
+
+    compileOnly 'androidx.annotation:annotation:1.2.0'
+}
+
+// 避免 lint 注解抽取任务在无外网/403 环境下阻断 AAR 打包
+tasks.configureEach { task ->
+    if (task.name.startsWith("extract") && task.name.endsWith("Annotations")) {
+        task.enabled = false
+    }
+}

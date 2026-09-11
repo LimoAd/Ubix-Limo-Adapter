@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+
+    <com.ubimax.sample.base.DemoTitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/activity_item_slot"></include>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/ubix_tool_viewline" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="广告宽度(dp)"
+            android:textColor="@color/ubix_tool_black85"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/widthEdt"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:inputType="number"
+            android:text=""
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="14sp"
+            android:theme="@style/MyEditText" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/ubix_tool_viewline" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="广告高度(dp)"
+            android:textColor="@color/ubix_tool_black85"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/heightEdt"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:inputType="number"
+            android:text=""
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="14sp"
+            android:theme="@style/MyEditText" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/vg_bg" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/feedContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/vg_bg"></FrameLayout>
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/loadBtn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_blue_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="拉取"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/priceBtn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="获取价格"
+        android:textColor="@color/ubix_tool_black65"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/showBtn"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/demo_button_bg"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="展示"
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:id="@+id/isValid"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="1"
+            android:background="@drawable/demo_button_bg"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="广告是否有效"
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/loadAndShow"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/demo_button_bg"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="拉取并展示"
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/showList"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/demo_button_blue_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="@string/load_list"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="visible" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:id="@+id/logTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:lineSpacingExtra="3dp"
+            android:minHeight="200dp"
+            android:padding="15dp"
+            android:textColor="@color/ubix_tool_black65"
+            android:textSize="12sp" />
+    </ScrollView>
+
+
+</LinearLayout>
+
+
+
