@@ -29,11 +29,11 @@ repositories {
 
 dependencies {
     // UBidding 主 SDK 由宿主提供
-    compileOnly fileTree(include: ['UBidding.SDK*.aar'], dir: '../libs')
-    // 领摩 Adbid 聚合 SDK
-    api files('libs/adbid_sdk_2.1.0.23_0911_1016.aar')
-    api files('libs/adbid_merge_kuaiyou_1.0.0_0911_1953.aar')
-    api files('libs/lmky-5.1.4.aar')
+    // 领摩 Adbid 聚合 SDK（经独立 module 包装，避免 AGP 禁止 library 直接依赖本地 .aar）
+    compileOnly(files("libs/adbid_sdk_2.1.0.23_0914_1720.aar"))
+    compileOnly(files("libs/lmky-5.1.4.aar"))
+    compileOnly(files("libs/adbid_merge_kuaiyou_1.0.0_0911_1953.aar"))
+    compileOnly(files("libs/UBidding.SDK_4.1.1.11.aar"))
 
     compileOnly 'androidx.annotation:annotation:1.2.0'
 }
@@ -42,5 +42,26 @@ dependencies {
 tasks.configureEach { task ->
     if (task.name.startsWith("extract") && task.name.endsWith("Annotations")) {
         task.enabled = false
+    }
+}
+
+// extract*Annotations 被禁用后不会生成 typedefs.txt，但 sync*LibJars 仍把它当作必选输入。
+// 用独立任务在 sync 之前写出空文件（兼容 clean，且早于 @InputFile 校验）。
+afterEvaluate {
+    android.libraryVariants.all { variant ->
+        def capName = variant.name.capitalize()
+        def typedefFile = file("$buildDir/intermediates/annotations_typedef_file/${variant.name}/typedefs.txt")
+        def stubTask = tasks.register("create${capName}TypedefStub") {
+            outputs.file(typedefFile)
+            doLast {
+                typedefFile.parentFile.mkdirs()
+                if (!typedefFile.exists()) {
+                    typedefFile.createNewFile()
+                }
+            }
+        }
+        tasks.named("sync${capName}LibJars").configure {
+            dependsOn(stubTask)
+        }
     }
 }

@@ -35,9 +35,7 @@ public class AdbidBannerAdapter extends UMTCustomBannerAdapter {
         Context ctx = context != null ? context : BaseUtils.getContext();
         bannerView = new AdbidBannerView(ctx);
         bannerView.setUnitId(customConfig.getAdnSlotId());
-        if (umtAdConfig != null && umtAdConfig.width > 0 && umtAdConfig.height > 0) {
-            bannerView.setAdSize(dp2px(umtAdConfig.width), dp2px(umtAdConfig.height));
-        }
+        bannerView.setAdSize(dp2px(umtAdConfig.width), dp2px(umtAdConfig.height));
         // 仅媒体显式设置静音/非静音时下发；DEFAULT 不干预，交给 Adbid 默认/云端静音
         if (getMuteStatus() > UMTConstant.MuteType.DEFAULT) {
             bannerView.setAdMuted(getMuteStatus() != UMTConstant.MuteType.UNMUTE);

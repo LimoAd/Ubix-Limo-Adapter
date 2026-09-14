@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baidu.mobads.tools.ToolsActivity;
 import com.ubimax.sample.express.BannerActivity;
 import com.ubimax.sample.express.InterstitialActivity;
 import com.ubimax.sample.express.RewardActivity;
@@ -82,7 +81,6 @@ public class MainActivity extends Activity {
         bindButton(inflater, R.mipmap.ubix_splash, "插屏广告", InterstitialActivity.class);
         bindButton(inflater, R.mipmap.ubix_splash, "激励视频广告", RewardActivity.class);
         bindButton(inflater, R.mipmap.ubix_splash, "横幅广告", BannerActivity.class);
-        bindButton(inflater, R.mipmap.ubix_splash, "百度测试工具", ToolsActivity.class);
 
     }
 

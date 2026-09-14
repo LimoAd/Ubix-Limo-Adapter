@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.adbid.media.AdBidPlatform;
+import com.adbid.sdk.AdbidSdk;
 import com.ubimax.UMTSDK;
 import com.ubimax.api.init.UMTInitCallBack;
 import com.ubimax.api.init.UMTInitConfig;
@@ -44,6 +46,8 @@ public class UMTApplication extends Application {
     }
 
     public void init() {
+
+        AdbidSdk.getInstance(this).getSetting().setForbidShowPlatformList(List.of(AdBidPlatform.LM));
         UMTUserInfoConfig userInfoConfig = new UMTUserInfoConfig();
         userInfoConfig.setUserId("your user id");
         userInfoConfig.setSubChannel("2");
