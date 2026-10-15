@@ -47,7 +47,6 @@ public class UMTApplication extends Application {
 
     public void init() {
 
-        AdbidSdk.getInstance(this).getSetting().setForbidShowPlatformList(List.of(AdBidPlatform.LM));
         UMTUserInfoConfig userInfoConfig = new UMTUserInfoConfig();
         userInfoConfig.setUserId("your user id");
         userInfoConfig.setSubChannel("2");

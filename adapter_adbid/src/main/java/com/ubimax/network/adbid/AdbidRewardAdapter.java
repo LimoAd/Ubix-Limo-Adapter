@@ -27,11 +27,16 @@ public class AdbidRewardAdapter extends UMTCustomRewardAdapter {
 
     @Override
     public void load(Context context, UMTAdConfig umtAdConfig, final UMTAdnServerConfig customConfig) {
-        Log.i(TAG, "load slot:" + customConfig.getAdnSlotId());
+        Log.i(TAG, "load slot:" + (customConfig != null ? customConfig.getAdnSlotId() : "null"));
         destroyInner();
-        rewardAd = new AdbidRewarded(customConfig.getAdnSlotId());
-        applyMute(rewardAd);
-        rewardAd.setAdListener(new AdbidRewardListener() {
+        if (customConfig == null) {
+            callLoadFail("-1", "config is null");
+            return;
+        }
+        try {
+            rewardAd = new AdbidRewarded(customConfig.getAdnSlotId());
+            applyMute(rewardAd);
+            rewardAd.setAdListener(new AdbidRewardListener() {
             @Override
             public void onUserReward(@NonNull AdbidAdInfo adInfo) {
                 Log.i(TAG, "onUserReward");
@@ -40,12 +45,18 @@ public class AdbidRewardAdapter extends UMTCustomRewardAdapter {
 
             @Override
             public void onAdLoad(@NonNull AdbidAdInfo adInfo) {
-                long price = Math.round(adInfo.getPrice());
-                Log.i(TAG, "onAdLoad price:" + price);
-                if (customConfig.getBiddingType() == UMTConstant.BiddingType.CLIENT_BIDDING) {
-                    callAdDataLoadSucc(price);
-                    callAdCacheSucc(price);
-                } else {
+                try {
+                    long price = Math.round(adInfo.getPrice());
+                    Log.i(TAG, "onAdLoad price:" + price);
+                    if (customConfig.getBiddingType() == UMTConstant.BiddingType.CLIENT_BIDDING) {
+                        callAdDataLoadSucc(price);
+                        callAdCacheSucc(price);
+                    } else {
+                        callAdDataLoadSucc();
+                        callAdCacheSucc();
+                    }
+                } catch (Throwable t) {
+                    Log.e(TAG, "onAdLoad exception", t);
                     callAdDataLoadSucc();
                     callAdCacheSucc();
                 }
@@ -85,7 +96,11 @@ public class AdbidRewardAdapter extends UMTCustomRewardAdapter {
                 callAdClick();
             }
         });
-        rewardAd.loadAd();
+            rewardAd.loadAd();
+        } catch (Throwable t) {
+            Log.e(TAG, "load exception", t);
+            callLoadFail("-1", t.getMessage() != null ? t.getMessage() : "load exception");
+        }
     }
 
     @Override
@@ -119,7 +134,11 @@ public class AdbidRewardAdapter extends UMTCustomRewardAdapter {
     public void notifyWin(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyWin");
         if (rewardAd != null) {
-            rewardAd.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            try {
+                rewardAd.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyWin exception", t);
+            }
         }
     }
 
@@ -127,7 +146,11 @@ public class AdbidRewardAdapter extends UMTCustomRewardAdapter {
     public void notifyLoss(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyLoss");
         if (rewardAd != null) {
-            rewardAd.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            try {
+                rewardAd.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyLoss exception", t);
+            }
         }
     }
 

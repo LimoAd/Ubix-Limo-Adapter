@@ -49,6 +49,7 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
     public void init(AdbidNativeLoader loader, final AdbidNativeAd ad) {
         this.nativeLoader = loader;
         this.nativeAd = ad;
+        try {
         // 仅媒体显式设置静音/非静音时下发；DEFAULT 不干预，交给 Adbid 默认/云端静音
         if (getMuteStatus() > UMTConstant.MuteType.DEFAULT) {
             ad.setMuted(getMuteStatus() != UMTConstant.MuteType.UNMUTE);
@@ -211,6 +212,9 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
         } catch (Throwable t) {
             showException(t);
         }
+        } catch (Throwable t) {
+            showException(t);
+        }
     }
 
     @Override
@@ -234,8 +238,12 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
     @Override
     public long getBiddingPrice() {
         long price = 0;
-        if (isClientBidding() && nativeAd != null && nativeAd.getAdbidAdInfo() != null) {
-            price = Math.round(nativeAd.getAdbidAdInfo().getPrice());
+        try {
+            if (isClientBidding() && nativeAd != null && nativeAd.getAdbidAdInfo() != null) {
+                price = Math.round(nativeAd.getAdbidAdInfo().getPrice());
+            }
+        } catch (Throwable t) {
+            showException(t);
         }
         Log.i(TAG, "getBiddingPrice price:" + price);
         return price;
@@ -249,21 +257,29 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
-        if (nativeAd != null) {
-            nativeAd.destroy();
-            nativeAd = null;
+        try {
+            if (nativeAd != null) {
+                nativeAd.destroy();
+                nativeAd = null;
+            }
+            if (adbidNativeAdView != null) {
+                adbidNativeAdView.removeAllViews();
+                adbidNativeAdView = null;
+            }
+            nativeLoader = null;
+        } catch (Throwable t) {
+            showException(t);
         }
-        if (adbidNativeAdView != null) {
-            adbidNativeAdView.removeAllViews();
-            adbidNativeAdView = null;
-        }
-        nativeLoader = null;
     }
 
     @Override
     public AdnReadyStatus getReadyStatus() {
-        if (nativeAd != null && nativeAd.isReady()) {
-            return AdnReadyStatus.ADN_READY;
+        try {
+            if (nativeAd != null && nativeAd.isReady()) {
+                return AdnReadyStatus.ADN_READY;
+            }
+        } catch (Throwable t) {
+            showException(t);
         }
         return AdnReadyStatus.ADN_NOT_READY;
     }
@@ -276,12 +292,17 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
     public ViewGroup getCustomAdContainer() {
         Log.i(TAG, "getCustomAdContainer");
         if (nativeAd != null) {
-            android.content.Context ctx = BaseUtils.getContext();
-            if (ctx == null) {
-                Log.e(TAG, "getCustomAdContainer context is null");
-                return null;
+            try {
+                android.content.Context ctx = BaseUtils.getContext();
+                if (ctx == null) {
+                    Log.e(TAG, "getCustomAdContainer context is null");
+                    return null;
+                }
+                adbidNativeAdView = new ContextSafeNativeAdView(ctx);
+            } catch (Throwable t) {
+                showException(t);
+                adbidNativeAdView = null;
             }
-            adbidNativeAdView = new ContextSafeNativeAdView(ctx);
         }
         return adbidNativeAdView;
     }
@@ -433,7 +454,11 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
     public void notifyWin(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyWin");
         if (nativeLoader != null) {
-            nativeLoader.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            try {
+                nativeLoader.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            } catch (Throwable t) {
+                showException(t);
+            }
         }
     }
 
@@ -441,7 +466,11 @@ public class AdbidFeedNativeAd extends UMTCustomFeedAdBean {
     public void notifyLoss(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyLoss");
         if (nativeLoader != null) {
-            nativeLoader.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            try {
+                nativeLoader.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            } catch (Throwable t) {
+                showException(t);
+            }
         }
     }
 

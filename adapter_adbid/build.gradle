@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+// AAR 版本号，产物命名：UBidding_adapter_limo_${adapterVersion}.aar
+def adapterVersion = "4.0.1"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -7,6 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 30
+        versionName adapterVersion
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -19,21 +23,26 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "UBidding_adapter_limo_${adapterVersion}.aar"
+        }
+    }
 }
 
 repositories {
     flatDir {
-        dirs 'libs', '../libs'
+        // SDK aar 统一放在 app/libs 下，此处直接引用，保持一套共用
+        dirs '../app/libs'
     }
 }
 
 dependencies {
     // UBidding 主 SDK 由宿主提供
     // 领摩 Adbid 聚合 SDK（经独立 module 包装，避免 AGP 禁止 library 直接依赖本地 .aar）
-    compileOnly(files("libs/adbid_sdk_2.1.0.23_0914_1720.aar"))
-    compileOnly(files("libs/lmky-5.1.4.aar"))
-    compileOnly(files("libs/adbid_merge_kuaiyou_1.0.0_0911_1953.aar"))
-    compileOnly(files("libs/UBidding.SDK_4.1.1.11.aar"))
+    compileOnly(files("../app/libs/adbid_sdk_2.1.0.25_1015_1539.aar"))
+    compileOnly(files("../app/libs/UBidding.SDK_4.1.2.11.aar"))
 
     compileOnly 'androidx.annotation:annotation:1.2.0'
 }

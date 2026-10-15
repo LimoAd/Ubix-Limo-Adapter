@@ -34,9 +34,14 @@ public class AdbidFeedAdapter extends UMTCustomFeedAdapter {
                     ErrorConstant.ADN_RENDER_TYPE_ERROR.getMsg());
             return;
         }
+        if (customConfig == null) {
+            callLoadFail("-1", "config is null");
+            return;
+        }
         Log.i(TAG, "load slot:" + customConfig.getAdnSlotId());
         destroyInner();
-        nativeLoader = new AdbidNativeLoader(context, customConfig.getAdnSlotId(),
+        try {
+            nativeLoader = new AdbidNativeLoader(context, customConfig.getAdnSlotId(),
                 new NativeAdbidLoadListener() {
                     @Override
                     public void onNativeAdLoaded(@NonNull AdbidNativeAd nativeAd) {
@@ -64,6 +69,10 @@ public class AdbidFeedAdapter extends UMTCustomFeedAdapter {
             nativeLoader.setAdMuted(getMuteStatus() != UMTConstant.MuteType.UNMUTE);
         }
         nativeLoader.loadAd();
+        } catch (Throwable t) {
+            Log.e(TAG, "load exception", t);
+            callLoadFail("-1", t.getMessage() != null ? t.getMessage() : "load exception");
+        }
     }
 
     @Override

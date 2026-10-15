@@ -48,21 +48,22 @@ public class AdbidInitManager extends UMTCustomInitManager {
 
         UMTInitConfig umtInitConfig = customInitConfig.getUmtInitConfig();
         boolean debug = umtInitConfig != null && umtInitConfig.isDebug;
-        AdbidSdk.getInstance(context).setDebugMode(debug);
+        try {
+            AdbidSdk.getInstance(context).setDebugMode(debug);
 
-        AdbidInitConfig.Builder builder = AdbidInitConfig.builder(appId);
-        if (umtInitConfig != null && umtInitConfig.userInfo != null) {
-            UMTUserInfoConfig userInfo = umtInitConfig.userInfo;
-            if (!TextUtils.isEmpty(userInfo.getChannel())) {
-                builder.setAppChannel(userInfo.getChannel());
+            AdbidInitConfig.Builder builder = AdbidInitConfig.builder(appId);
+            if (umtInitConfig != null && umtInitConfig.userInfo != null) {
+                UMTUserInfoConfig userInfo = umtInitConfig.userInfo;
+                if (!TextUtils.isEmpty(userInfo.getChannel())) {
+                    builder.setAppChannel(userInfo.getChannel());
+                }
+                if (!TextUtils.isEmpty(userInfo.getUserId())) {
+                    builder.setUserId(userInfo.getUserId());
+                }
             }
-            if (!TextUtils.isEmpty(userInfo.getUserId())) {
-                builder.setUserId(userInfo.getUserId());
-            }
-        }
-        builder.addCustomController(createController(customInitConfig));
+            builder.addCustomController(createController(customInitConfig));
 
-        AdbidSdk.getInstance(context).initialize(builder.build(), new AdbidSdkInitListener() {
+            AdbidSdk.getInstance(context).initialize(builder.build(), new AdbidSdkInitListener() {
             @Override
             public void onSdkInitCallback(boolean isSuccess, AdbidError adbidError) {
                 if (isSuccess) {
@@ -76,6 +77,10 @@ public class AdbidInitManager extends UMTCustomInitManager {
                 }
             }
         });
+        } catch (Throwable t) {
+            Log.e(TAG, "init exception", t);
+            callInitFail("-1", t.getMessage() != null ? t.getMessage() : "init exception");
+        }
     }
 
     private AdbidCustomController createController(final UMTCustomInitConfig customInitConfig) {

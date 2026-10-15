@@ -27,11 +27,16 @@ public class AdbidSplashAdapter extends UMTCustomSplashAdapter {
 
     @Override
     public void load(Context context, UMTAdConfig umtAdConfig, final UMTAdnServerConfig customConfig) {
-        Log.i(TAG, "load slot:" + customConfig.getAdnSlotId());
+        Log.i(TAG, "load slot:" + (customConfig != null ? customConfig.getAdnSlotId() : "null"));
         destroyInner();
-        splashAd = new AdbidAppOpen(customConfig.getAdnSlotId());
-        applyMute(splashAd);
-        splashAd.setAdListener(new AdbidListener() {
+        if (customConfig == null) {
+            callLoadFail("-1", "config is null");
+            return;
+        }
+        try {
+            splashAd = new AdbidAppOpen(customConfig.getAdnSlotId());
+            applyMute(splashAd);
+            splashAd.setAdListener(new AdbidListener() {
             @Override
             public void onAdLoad(@NonNull AdbidAdInfo info) {
                 long price = priceOf(info);
@@ -76,6 +81,10 @@ public class AdbidSplashAdapter extends UMTCustomSplashAdapter {
             }
         });
         splashAd.loadAd();
+        } catch (Throwable t) {
+            Log.e(TAG, "load exception", t);
+            callLoadFail("-1", t.getMessage() != null ? t.getMessage() : "load exception");
+        }
     }
 
     @Override
@@ -105,7 +114,11 @@ public class AdbidSplashAdapter extends UMTCustomSplashAdapter {
     public void notifyWin(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyWin");
         if (splashAd != null) {
-            splashAd.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            try {
+                splashAd.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyWin exception", t);
+            }
         }
     }
 
@@ -113,7 +126,11 @@ public class AdbidSplashAdapter extends UMTCustomSplashAdapter {
     public void notifyLoss(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyLoss");
         if (splashAd != null) {
-            splashAd.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            try {
+                splashAd.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyLoss exception", t);
+            }
         }
     }
 

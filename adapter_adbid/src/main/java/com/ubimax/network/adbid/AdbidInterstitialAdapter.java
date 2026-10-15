@@ -27,20 +27,31 @@ public class AdbidInterstitialAdapter extends UMTCustomInterstitialAdapter {
 
     @Override
     public void load(Context context, UMTAdConfig umtAdConfig, final UMTAdnServerConfig customConfig) {
-        Log.i(TAG, "load slot:" + customConfig.getAdnSlotId());
+        Log.i(TAG, "load slot:" + (customConfig != null ? customConfig.getAdnSlotId() : "null"));
         destroyInner();
-        interstitialAd = new AdbidInterstitial(customConfig.getAdnSlotId());
-        applyMute(interstitialAd);
-        interstitialAd.setAdListener(new AdbidListener() {
+        if (customConfig == null) {
+            callLoadFail("-1", "config is null");
+            return;
+        }
+        try {
+            interstitialAd = new AdbidInterstitial(customConfig.getAdnSlotId());
+            applyMute(interstitialAd);
+            interstitialAd.setAdListener(new AdbidListener() {
             @Override
             public void onAdLoad(@NonNull AdbidAdInfo adInfo) {
-                long price = Math.round(adInfo.getPrice());
-                Log.i(TAG, "onAdLoad price:" + price);
                 status = loadSucc;
-                if (customConfig.getBiddingType() == UMTConstant.BiddingType.CLIENT_BIDDING) {
-                    callAdDataLoadSucc(price);
-                    callAdCacheSucc(price);
-                } else {
+                try {
+                    long price = Math.round(adInfo.getPrice());
+                    Log.i(TAG, "onAdLoad price:" + price);
+                    if (customConfig.getBiddingType() == UMTConstant.BiddingType.CLIENT_BIDDING) {
+                        callAdDataLoadSucc(price);
+                        callAdCacheSucc(price);
+                    } else {
+                        callAdDataLoadSucc();
+                        callAdCacheSucc();
+                    }
+                } catch (Throwable t) {
+                    Log.e(TAG, "onAdLoad exception", t);
                     callAdDataLoadSucc();
                     callAdCacheSucc();
                 }
@@ -82,7 +93,11 @@ public class AdbidInterstitialAdapter extends UMTCustomInterstitialAdapter {
                 callAdClick();
             }
         });
-        interstitialAd.loadAd();
+            interstitialAd.loadAd();
+        } catch (Throwable t) {
+            Log.e(TAG, "load exception", t);
+            callLoadFail("-1", t.getMessage() != null ? t.getMessage() : "load exception");
+        }
     }
 
     @Override
@@ -116,7 +131,11 @@ public class AdbidInterstitialAdapter extends UMTCustomInterstitialAdapter {
     public void notifyWin(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyWin");
         if (interstitialAd != null) {
-            interstitialAd.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            try {
+                interstitialAd.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyWin exception", t);
+            }
         }
     }
 
@@ -124,7 +143,11 @@ public class AdbidInterstitialAdapter extends UMTCustomInterstitialAdapter {
     public void notifyLoss(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyLoss");
         if (interstitialAd != null) {
-            interstitialAd.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            try {
+                interstitialAd.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyLoss exception", t);
+            }
         }
     }
 

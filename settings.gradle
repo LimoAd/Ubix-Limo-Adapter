@@ -1,2 +1,3 @@
 rootProject.name = 'Ubix_Lm_Adapter'
+include ':app'
 include ':adapter_adbid'

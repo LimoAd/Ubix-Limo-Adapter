@@ -30,12 +30,17 @@ public class AdbidBannerAdapter extends UMTCustomBannerAdapter {
 
     @Override
     public void load(Context context, UMTAdConfig umtAdConfig, final UMTAdnServerConfig customConfig) {
-        Log.i(TAG, "load slot:" + customConfig.getAdnSlotId());
+        Log.i(TAG, "load slot:" + (customConfig != null ? customConfig.getAdnSlotId() : "null"));
         destroyInner();
+        if (context == null || customConfig == null) {
+            callLoadFail("-1", "context or config is null");
+            return;
+        }
         Context ctx = context != null ? context : BaseUtils.getContext();
-        bannerView = new AdbidBannerView(ctx);
-        bannerView.setUnitId(customConfig.getAdnSlotId());
-        bannerView.setAdSize(dp2px(umtAdConfig.width), dp2px(umtAdConfig.height));
+        try {
+            bannerView = new AdbidBannerView(ctx);
+            bannerView.setUnitId(customConfig.getAdnSlotId());
+            bannerView.setAdSize(dp2px(umtAdConfig.width), dp2px(umtAdConfig.height));
         // 仅媒体显式设置静音/非静音时下发；DEFAULT 不干预，交给 Adbid 默认/云端静音
         if (getMuteStatus() > UMTConstant.MuteType.DEFAULT) {
             bannerView.setAdMuted(getMuteStatus() != UMTConstant.MuteType.UNMUTE);
@@ -44,11 +49,16 @@ public class AdbidBannerAdapter extends UMTCustomBannerAdapter {
             @Override
             public void onBannerLoad(@NonNull AdbidAdInfo adInfo) {
                 loaded = true;
-                long price = Math.round(adInfo.getPrice());
-                Log.i(TAG, "onBannerLoad price:" + price);
-                if (isClientBidding()) {
-                    callAdCacheSucc(price);
-                } else {
+                try {
+                    long price = Math.round(adInfo.getPrice());
+                    Log.i(TAG, "onBannerLoad price:" + price);
+                    if (isClientBidding()) {
+                        callAdCacheSucc(price);
+                    } else {
+                        callAdCacheSucc();
+                    }
+                } catch (Throwable t) {
+                    Log.e(TAG, "onBannerLoad exception", t);
                     callAdCacheSucc();
                 }
             }
@@ -77,7 +87,11 @@ public class AdbidBannerAdapter extends UMTCustomBannerAdapter {
                 callAdClick();
             }
         });
-        bannerView.loadAd();
+            bannerView.loadAd();
+        } catch (Throwable t) {
+            Log.e(TAG, "load exception", t);
+            callLoadFail("-1", t.getMessage() != null ? t.getMessage() : "load exception");
+        }
     }
 
     @Override
@@ -97,7 +111,11 @@ public class AdbidBannerAdapter extends UMTCustomBannerAdapter {
     public void notifyWin(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyWin");
         if (bannerView != null) {
-            bannerView.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            try {
+                bannerView.winNotice(AdbidBiddingUtils.getSecondPrice(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyWin exception", t);
+            }
         }
     }
 
@@ -105,7 +123,11 @@ public class AdbidBannerAdapter extends UMTCustomBannerAdapter {
     public void notifyLoss(BiddingFeedBackBean bean) {
         Log.i(TAG, "notifyLoss");
         if (bannerView != null) {
-            bannerView.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            try {
+                bannerView.lossNotice(AdbidBiddingUtils.getFailInfo(bean));
+            } catch (Throwable t) {
+                Log.e(TAG, "notifyLoss exception", t);
+            }
         }
     }
 
